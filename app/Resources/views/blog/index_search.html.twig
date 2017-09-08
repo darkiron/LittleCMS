@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="col-md-12">
+	{% for article in articles %}
+		<a href="{{ path('cms_blog_view', { 'slug':article.slug }) }} "><h2>{{ article.title }}</h2></a>
+		{{ article.user.getGravatar|raw }} <span style="font-style:italic">{{ 'par :'|trans }}</span> <span style="font-weight:600">{{ article.user.username }}</span> <span style="font-style:italic">- {{ 'le'|trans }} {{ article.datepublication|date('d/m/Y') }}</span>
+		<span class="disqus-comment-count" data-disqus-url="{{ url('cms_blog_view', { 'slug':article.slug }) }}#disqus_thread"></span>
+		<br/>
+		{{ article.description|raw }}
+		{#{% if article.replies.count > 0 %}{{ article.replies.count }} {{'commentaires'|trans }}{% else %}{{ 'pas de commentaires'|trans }}{% endif %}#}
+		<br/>
+		
+		<hr/>
+		{% else %}
+			<div class="alert alert-warning" role="alert">
+		  		<strong>{{"Aucuns résultats !"|trans}}</strong> {{"Nous n'avons trouvez aucunes correspondances."|trans}}
+			</div>
+	{% endfor %}
+
+	<nav style="text-align:center">
+	<ul class="pagination">
+		{% if nb_pages > 1 %}
+		{% if page > 1 %}
+			<li class="page-item">
+				<a class="page-link" href="{{ path('cms_blog_home', {'page':page-1}) }}" aria-label="Previous">
+					<span aria-hidden="true">&laquo;</span>
+					<span class="sr-only">Previous</span>
+				</a>
+			</li>
+		{% endif %}
+		{% for i in range(0,nb_pages-1) %}
+			<li class="page-item {% if i == page %}active{% endif %}"><a class="page-link" href="{{ path('cms_blog_home',{ 'page':i})}}">{{i}}</a></li>
+		{% endfor %}
+		{% if page < nb_pages %}
+			<li class="page-item">
+				<a class="page-link" href="{{ path('cms_blog_home', {'page':page+1})}}" aria-label="Next">
+					<span aria-hidden="true">&raquo;</span>
+					<span class="sr-only">Next</span>
+				</a>
+			</li>
+		{% endif %}
+	{% endif %}
+	</ul>
+	</nav>
+</div>
+{% endblock %}

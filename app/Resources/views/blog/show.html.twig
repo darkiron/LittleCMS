@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent()~' - '~ article.title }}{% endblock %}
+
+{% block md %}{{ article.metadescription }}{% endblock %}
+{% block md1 %}{{ article.metadescription }}{% endblock %}
+{% block mk %}Darkiron, Arma 3, Arma 3 scripting, tuto arma 3, tutto arma 3 scripting, jeux pc, jeux vidéo, xbox one, x1, symfony 2, symfony 3, billets d'humeur, lyon {% endblock %}
+     
+{% block body %}
+		<div class="col-md-12">
+			<h2><a href="{{ path('cms_blog_view', { 'slug':article.slug })}}">{{ article.title }}</a></h2>
+			<div style="text-transform:uppercase;color: #999;font-size: 12px;letter-spacing: 1px;">
+				<i class="fa fa-user" aria-hidden="true"></i> {{ article.user.username }} <i class="fa fa-calendar" aria-hidden="true"></i> {{ article.datepublication|date('d M Y H:m') }}
+				<i class="fa fa-comments" aria-hidden="true"></i> <span class="disqus-comment-count" data-disqus-url="{{ url('cms_blog_view', { 'slug':article.slug }) }}#disqus_thread"></span>
+			</div>
+
+			{{ article.description|raw }}
+
+			
+		</div>
+
+		<hr/>
+		<div id="disqus_thread"></div>
+			<script>
+			/**
+			* RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+			* LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+			*/
+			/*
+			var disqus_config = function () {
+			this.page.url = {{ path('cms_blog_view', { 'slug':article.slug })}}; // Replace PAGE_URL with your page's canonical URL variable
+			this.page.identifier = {{ article.id }}; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+			};
+			*/
+			(function() { // DON'T EDIT BELOW THIS LINE
+			var d = document, s = d.createElement('script');
+
+			s.src = '//blogdarkiron.disqus.com/embed.js';
+
+			s.setAttribute('data-timestamp', +new Date());
+			(d.head || d.body).appendChild(s);
+			})();
+			</script>
+			<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+		{#{{ render(controller(
+		        'CMSBlogBundle:Reply:new',
+		        { 'id': article.id }
+		    )) }}
+		   #}
+	
+{% endblock %}

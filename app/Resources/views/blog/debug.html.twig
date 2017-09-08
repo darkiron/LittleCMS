@@ -1,0 +1,482 @@
+<html>
+<head>
+<link href="https://fonts.googleapis.com/css?family=Archivo+Black|Asul|Cardo|Chivo|Eczar|Pathway+Gothic+One|Roboto+Mono|Rubik|Tenor+Sans|Work+Sans" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+  html,
+ body {
+     width: 100%;
+     height: 100%;
+     margin: 0px;
+     background: #f5f5f5;
+     font-family: 'Rubik', sans-serif;
+     font-size: 13px;
+ }
+
+ .side_nav {
+     display: inline-block;
+     width: 20%;
+     position: fixed;
+     left: -30%;
+     top: 0px;
+     bottom: 0px;
+     background-color: #1e1e1e;
+     z-index: 11;
+     color: #d0d0d0;
+     box-shadow: 5px 0px 14px rgba(24, 24, 26, 0.56);
+     transition: left 2s;
+ }
+
+ .side_nav.open {
+     left: 0px!important;
+     transition: left 2s;
+ }
+
+ .overlay {
+     width: 100%;
+     background-color: rgba(30, 30, 30, 0.48);
+     position: fixed;
+     height: 100%;
+     z-index: 1;
+     bottom: 0px;
+     left: 0px;
+     rigth: 0px;
+ }
+
+ .open-overlay {
+     overflow: hidden;
+ }
+
+ .side_nav a {
+     color: #d0d0d0;
+     text-decoration: none;
+ }
+
+ .side_nav ul {
+     margin-top: 45px;
+     list-style: none;
+     padding: 0px;
+     width: 100%;
+     display: flex;
+     flex-direction: column;
+ }
+
+ .side_nav ul:first-child {
+     margin-top: 0px;
+     flex-direction: row;
+ }
+
+ .side_nav ul:first-child li {
+     float: left;
+     width: 20%;
+ }
+
+ .side_nav ul:first-child li a {
+     border-left: 1px solid #333;
+ }
+
+ .side_nav form {
+     display: flex;
+ }
+
+ .side_nav form input {
+     height: 40px;
+     padding: 0px 5px;
+     border-width: 1px;
+     width: 100%;
+ }
+
+ .side_nav form button {
+     background: transparent;
+     border: 1px solid #333;
+ }
+
+ .side_nav ul li a {
+     font-size: 1.5em;
+     line-height: 2em;
+     text-align: center;
+     padding: 1% 0%;
+     height: 40px;
+     width: 100%;
+     border-bottom: 1px solid #333;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+ }
+
+ .side_nav ul li a:first-child {
+     border-top: 1px solid #333;
+ }
+
+ .side_nav ul li a:hover {
+     background-color: #333;
+ }
+
+ .side_nav ul li {
+     display: inline-block;
+ }
+
+ header {
+     background-image: url('http://cdn.magdeleine.co/wp-content/uploads/2017/01/frseedyr418-adrian-1400x933.jpg');
+     width: 100%;
+     height: 50%;
+     background-position: bottom;
+     background-size: cover;
+     color: #fff;
+     position: relative;
+     display: inline-block;
+ }
+
+ .header_content {
+     width: 75%;
+     margin: 50px auto;
+     position: relative;
+     font-size: 2.5em;
+     padding: 0 15px;
+ }
+
+ #menu i {
+     text-shadow: 5px 3px 3px #1e1e1e;
+ }
+
+ .header_content a {
+     color: #fff;
+     text-decoration: none;
+ }
+
+ section {
+     display: flex;
+     width: 75%;
+     margin-left: auto;
+     margin-right: auto;
+     padding: 15px;
+     flex-wrap: wrap;
+     min-height: 80%;
+ }
+
+ section.pagination {
+     min-height: 0%;
+     display: flex;
+     justify-content: center;
+ }
+
+ section article {
+     display: flex;
+     background-color: #333;
+     width: 32%;
+     border: 1px solid #fff;
+     color: #fff;
+     flex-direction: column;
+     justify-content: center;
+ }
+
+ section article h2,
+ section article p,
+ section article div {
+     width: 100%;
+     text-align: center;
+ }
+
+ section article h2 {
+     font-family: 'Archivo Black', sans-serif;
+ }
+
+ section article p {
+     margin: 0px;
+     line-height: 1.5em;
+ }
+
+ .article_hover {
+     width: 100%;
+     text-align: center;
+     justify-content: center;
+     flex-direction: column;
+     text-decoration: none;
+     z-index: 1;
+ }
+
+ button {
+     width: 150px;
+     height: 42px;
+     text-transform: uppercase;
+     font-weight: bold;
+     border: 1px solid #99ce66;
+     background-color: #99ce66;
+     color: #fff;
+     margin-left: auto;
+     margin-right: auto;
+     text-decoration: none;
+     z-index: 0;
+     cursor: pointer;
+ }
+
+ .author {
+     text-transform: capitalize;
+     font-weight: bold;
+ }
+
+ .comment:before {
+     content: '\2022';
+     margin-left: 5px;
+     margin-right: 5px;
+ }
+
+ section article:hover a,
+ section article a.active {
+     display: flex;
+ }
+
+ section article:hover p,
+ section article:hover h2 {
+     display: none;
+ }
+
+ section article a {
+     display: none;
+ }
+
+ section article:first-child {
+     width: 64.15%;
+     background-image: url('http://cdn.magdeleine.co/wp-content/uploads/2017/02/photo-1439211634854-369bece49719-1400x933.jpeg');
+     background-position: center;
+     background-size: cover;
+ }
+
+ section article:nth-child(2) {
+     background-image: url('http://cdn.magdeleine.co/wp-content/uploads/2017/01/3-1400x933.jpg');
+     background-position: center;
+     background-size: cover;
+ }
+
+ section article:nth-child(3) {
+     background-image: url('http://cdn.magdeleine.co/wp-content/uploads/2017/01/qpg8rkhrioo-annie-spratt-1400x933.jpg');
+     background-position: center;
+     background-size: cover;
+ }
+
+ section article:nth-child(4) {
+     background-image: url('http://cdn.magdeleine.co/wp-content/uploads/2017/01/frosted_spruce-1400x933.jpg');
+     background-position: center;
+     background-size: cover;
+ }
+
+ section article:nth-child(5) {
+     background-image: url('http://cdn.magdeleine.co/wp-content/uploads/2015/08/15543321722_1473282f67_o-1400x789.jpg');
+     background-position: center;
+     background-size: cover;
+ }
+.pagination a{
+ color:#333;
+ text-decoration:none;
+}
+.pagination ul{
+ list-style:none;
+ display:flex;
+ margin:0px 5px;
+ padding;0px;
+}
+.pagination ul li {
+ margin: 0px 5px;
+}
+.pagination ul li.active {
+ font-weight:bold;
+}
+
+ footer {
+     width: 100%;
+     height: 25%;
+     background-color: #1e1e1e;
+     font-family: 'Work Sans', sans-serif;
+     color: #d0d0d0;
+     display: flex;
+     justify-content: center;
+     flex-direction: column;
+     align-items: center;
+ }
+
+ footer a {
+     color: #d0d0d0;
+     margin: 2px;
+     font-size: 15px;
+ }
+
+ @media screen and (max-width: 780px) {
+     #menu {
+         /*color: #1e1e1e;*/
+     }
+     .side_nav {
+         left: -110%;
+         width: 95%;
+     }
+     section {
+         flex-direction: column;
+     }
+     section article {
+         width: 100%;
+         min-height: 250px;
+     }
+     section article:first-child {
+         width: 100%;
+     }
+     header {
+         height: 25%;
+     }
+ }
+  </style>
+</head>
+<body>
+  <nav id="sidenav" class="side_nav">
+  		<ul>
+  			<li>
+  				<a href="#"><i class="fa fa-facebook-official" aria-hidden="true">
+  			</i></a>
+  			</li>
+  			<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+  			<li><a href="#"><i class="fa fa-codepen" aria-hidden="true"></i></a></li>
+  			<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+  			<li><a href="#" class="close"><i class="fa fa-times" aria-hidden="true"></i></a></li>
+  		</ul>
+  		<form>
+  			<input type="text" id="search" placeholder="Search">
+  			<button><i class="fa fa-search" aria-hidden="true"></i></button>
+  		</form>
+  		<ul>
+  			<li><a href="">Home</a></li>
+  			<li><a href="">Category</a></li>
+  			<li><a href="">Contact</a></li>
+  		</ul>
+  		<footer>
+  			2017 - GNU
+  		</footer>
+  	</nav>
+	<header>
+		<div class="header_content">
+			<a href="" id="menu">
+				<i class="fa fa-bars" aria-hidden="true"></i>
+			</a>
+		</div>
+	</header>
+	<section>
+        {% for article in articles %}
+        <article style="background-image:url('{{ asset('uploads/'~ article.thumb.picture ) }}');">
+			<a href="{{ path('cms_blog_article_debug', { slug: article.slug })}}" class="article_hover"><button>Read more</button></a>
+			<h2>{{ article.title }}</h2>
+			<p class="author">By {{ article.user.username }}</p>
+			<p>
+				<span>{{  article.datepublication|date('d M Y H:m') }}</span>
+				<span class="comment">0 comments</span>
+			</p>
+		</article>
+        {% endfor %}
+		{# <article>
+			<a href="#" class="article_hover"><button>Read more</button></a>
+			<h2>Lorem ipseum dolores</h2>
+			<p class="author">By Odile deray</p>
+			<p>
+				<span>Febuary 7, 2017</span>
+				<span class="comment">0 comments</span>
+			</p>
+		</article>
+		<article>
+			<a href="#" class="article_hover"><button>Read more</button></a>
+			<h2>Lorem ipseum dolores</h2>
+			<p class="author">By Odile deray</p>
+			<p>
+				<span>Febuary 7, 2017</span>
+				<span class="comment">0 comments</span>
+			</p>
+		</article>
+		<article>
+			<a href="#" class="article_hover"><button>Read more</button></a>
+			<h2>Lorem ipseum dolores</h2>
+			<p class="author">By Odile deray</p>
+			<p>
+				<span>Febuary 7, 2017</span>
+				<span class="comment">0 comments</span>
+			</p>
+		</article>
+		<article>
+			<a href="#" class="article_hover"><button>Read more</button></a>
+			<h2>Lorem ipseum dolores</h2>
+			<p class="author">By Odile deray</p>
+			<p>
+				<span>Febuary 7, 2017</span>
+				<span class="comment">0 comments</span>
+			</p>
+		</article>
+		<article>
+			<a href="#" class="article_hover"><button>Read more</button></a>
+			<h2>Lorem ipseum dolores</h2>
+			<p class="author">By Odile deray</p>
+			<p>
+				<span>Febuary 7, 2017</span>
+				<span class="comment">0 comments</span>
+			</p>
+		</article>#}
+	</section>
+    <section class="pagination">
+		<ul>
+            {% if page > 1 %}
+                <li>
+                    <a  href="{{ path('cms_blog_debug', {'page':page-1}) }}" aria-label="Previous">
+                        <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+                    </a>
+                </li>
+            {% endif %}
+            {% for i in range(0,nb_pages-1) %}
+                <li class="{% if i == page %}active{% endif %}"><a href="{{ path('cms_blog_debug',{ 'page':i})}}">{{i}}</a></li>
+            {% endfor %}
+            {% if page < nb_pages %}
+                <li >
+                    <a  href="{{ path('cms_blog_debug', {'page':page+1})}}" aria-label="Next">
+                        <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                    </a>
+                </li>
+            {% endif %}
+		
+		</ul>
+	</section>
+	<footer>
+		<p>
+			<a href="#"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+			<a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+			<a href="#"><i class="fa fa-codepen" aria-hidden="true"></i></a>
+			<a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+		</p>
+		<p>foo is a footer ! - MIT Licenced 2017</p>
+	</footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script>
+  $('document').ready(function(){
+    $('section article').each(function(){
+       $(this).on('touchstart',function(){
+         $(this).addClass('active')
+       });
+       $(this).on('touchend',function(){
+         $(this).remveClass('active')
+       });
+    });
+    $('#menu').on('click',function(e) {
+      e.preventDefault();
+			$(this).find('i').addClass('fa-spin');
+			setTimeout(function(){
+				$('#menu i').removeClass('fa-spin');
+			},1000);
+      $('#sidenav').addClass('open');
+      $('body').addClass('open-overlay').prepend('<div class="overlay"></div>');
+      $('.overlay, .close').on('click',function(e) {
+				$(this).addClass('fa-spin');
+      e.preventDefault();
+      $('#sidenav').removeClass('open');
+      $('body').removeClass('open-overlay');
+      $('.overlay').remove();
+			setTimeout(function(){$('.close').removeClass('fa-spin')}, 1000);
+      });
+    });
+});
+  </script>
+</body>
+</html>

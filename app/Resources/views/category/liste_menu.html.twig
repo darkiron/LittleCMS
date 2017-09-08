@@ -1,0 +1,6 @@
+
+{% for category in categories %}
+<li class="nav-item {% if  request.get('_route') == 'cms_blog_cat' and cat.id == category.id  %}active {% endif %}">
+	<a class="nav-link"  href="{{ path('cms_blog_cat', { 'category': category.id, title:category.title } )}}"><i class="fa fa-hashtag" ></i> {{ category.title|capitalize }}</a>
+</li>
+{% endfor %}

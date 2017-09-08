@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="col-md-12">
+	{% for article in articles %}
+		<a href="{{ path('cms_blog_view', { 'slug':article.slug }) }} "><h2>{{ article.title }}</h2></a>
+		{{ article.user.getGravatar|raw }} <span style="font-style:italic">{{ 'par :'|trans }}</span> <span style="font-weight:600">{{ article.user.username }}</span> <span style="font-style:italic">- {{ 'le'|trans }} {{ article.datepublication|date('d/m/Y') }}</span>
+		<span class="disqus-comment-count" data-disqus-url="{{ url('cms_blog_view', { 'slug':article.slug }) }}#disqus_thread"></span>
+		<br/>
+		{{ article.description|raw }}
+		{#{% if article.replies.count > 0 %}{{ article.replies.count }} {{'commentaires'|trans }}{% else %}{{ 'pas de commentaires'|trans }}{% endif %}#}
+		<br/>
+		
+		<hr/>
+	{% endfor %}
+
+	
+</div>
+{% endblock %}

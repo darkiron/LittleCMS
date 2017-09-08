@@ -1,0 +1,45 @@
+admin_index:
+    path:     /
+    defaults: { _controller: "CMSBlogBundle:Admin:index" }
+    methods:  GET
+
+admin_show:
+    path:     /{id}/show
+    defaults: { _controller: "CMSBlogBundle:Admin:show" }
+    methods:  GET
+
+admin_new: 
+    path:	/new 
+    defaults: { _controller: "CMSBlogBundle:Article:new"}
+
+admin_edit:
+    path: /edit/{article}
+    defaults: { _controller: "CMSBlogBundle:Article:edit"}
+
+admin_articles:
+    path: /articles 
+    defaults: {_controller: "CMSBlogBundle:Article:index"}
+
+admin_images_index:
+    path: /images 
+    defaults: { _controller: "CMSBlogBundle:Image:index" }
+
+admin_images_new:
+    path: /images/new
+    defaults: { _controller: "CMSBlogBundle:Image:new" }
+
+admin_about_new:
+    path: /about 
+    defaults: { _controller: "CMSBlogBundle:Admin:contact"}
+
+cms_blog_category:
+    resource: "@CMSBlogBundle/Resources/config/routing/category.yml"
+    prefix:   /category
+
+cms_blog_indexes:
+    path: /go-in-search
+    defaults: { _controller: "CMSBlogBundle:Admin:createIndex" }
+
+cms_blog_import:
+    path: /go-in-db
+    defaults: { _controller: "CMSBlogBundle:Admin:import" }

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}little CMS{% endblock %}</title>
+
+        <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+        {% block stylesheets %}
+        	<link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+        	<link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
+        {% endblock %}
+
+        <meta name="description" content="{% block md %}Your meta {% endblock %}" />
+        <meta name="keywords" content="{% block mk %} Your meta{% endblock %}" />
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    	<meta http-equiv="x-ua-compatible" content="ie=edge">
+    	{% block og %}
+    		<meta name="twitter:card" content="summary" />
+			<meta name="twitter:title" content="{% if article is not defined  %}Home{% else %}{{ article.title}}{% endif %}" />
+			<meta name="twitter:description" content="{% if article is not defined  %}Your meta{% else %}{{ article.metadescription}}{% endif %}" />
+			<meta name="twitter:image:src" content="{% if article is not defined or article.thumb is null  %}{{ 'http://localhost' ~ asset('images/marina.jpg') }}{% else %}{{ 'http://localhost' ~ asset('uploads/'~ article.thumb.picture ) }}{% endif %}" />
+			<meta name="twitter:image:width" content="620" />
+			<meta name="twitter:image:height" content="349" />
+			<meta property="og:site_name" content="Your meta" />
+			<meta property="og:type" content="{% if article is not defined  %}site{% else %}article{% endif %}" />
+			<meta property="og:title" content="{% if article is not defined  %}Home{% else %}{{ article.title}}{% endif %}" />
+			<meta property="og:url" content="{ app.request.uri }}" />
+			<meta property="og:description" content="{% if article is not defined  %}Your meta{% else %}{{ article.metadescription}}{% endif %}" />
+			<meta property="og:locale" content="fr_FR" />
+			<meta property="og:image" content="{% if article is not defined or article.thumb is null  %}{{ 'http://localhost' ~ asset('images/marina.jpg') }}{% else %}{{ 'http://localhost' ~ asset('uploads/'~ article.thumb.picture ) }}{% endif %}" />
+			<meta property="og:image:width" content="620" />
+			<meta property="og:image:height" content="349" />
+			<meta property="og:image:type" content="image/jpeg" />
+			<meta property="og:image" content="{% if article is not defined or article.thumb is null  %}{{ 'http://localhost' ~ asset('images/marina.jpg') }}{% else %}{{ 'http://localhost' ~ asset('uploads/'~ article.thumb.picture ) }}{% endif %}" />
+			<meta property="og:image:width" content="700" />
+			<meta property="og:image:height" content="393" />
+			<meta property="og:image:type" content="image/jpeg" />
+			<meta property="og:description"   content="{% block md1 %}Your meta{% endblock %}" />
+			<meta property="og:image"         content="{% if article is not defined or article.thumb is null  %}{{ 'http://localhost' ~ asset('images/marina.jpg') }}{% else %}{{ 'http://localhost' ~ asset('uploads/'~ article.thumb.picture ) }}{% endif %}" />
+			<link href="{% if article is not defined or article.thumb is null  %}'{{ 'http://localhost' ~ asset('images/marina.jpg')}}{% else %}{{ 'http://blog.darkiron.fr' ~ asset('uploads/'~ article.thumb.picture ) }}{% endif %}" rel="image_src"  />
+    	{% endblock %}
+        <style>
+        	body{
+        		font-family: 'Source Sans Pro', sans-serif;
+        		background-color: #E8E8E8;
+
+        	}
+        	h2{
+        		text-align: center;
+        	}
+        	h2 > a{
+        		color: #333;
+        	}
+        	h2 > a:hover{
+        		text-decoration: none;
+        		color: #333;
+        	}
+        	.bd-footer{
+    		    padding: 4rem 0;
+			   /* margin-top: 4rem;*/
+			    font-size: 85%;
+			    background-color: #f7f7f7;
+			    text-align: left;
+
+        	}
+			.bd-footer-links li {
+			    display: inline-block;
+			}
+			.bd-footer-links {
+			    padding-left: 0;
+			    margin-bottom: 1rem;
+			}
+
+			img.avatar{
+				    width: 4%;
+    				border-radius: 50%;
+    				float: left;
+    				margin-right: 5px;
+			}
+
+			.bg-inverse {
+			    color: #eceeef;
+			    background-color: #2F2E2E;
+				padding-bottom: 0%;
+				position: fixed;
+			    width: 100%;
+			    z-index: 1;
+			    box-shadow: 0px 0px 5px black;
+			}
+			.navbar .nav.navbar-nav .nav-item:after{
+				content: '';
+				display: block;
+				margin: auto;
+				height: 3px;
+				width: 0px;
+				background: transparent;
+				transition: width .5s ease, background-color .5s ease;
+			}
+			.navbar .nav.navbar-nav .nav-item:hover:after{
+				width:100%;
+				background-color: rgba(255,255,255,.5);
+			}
+
+			.navbar .nav.navbar-nav .nav-item.active:after{
+				background-color:   #fff;
+				width: 100%;
+			}
+			.navbar-nav .nav-item {
+			    float: left;
+			    margin: 0%;
+			    min-width: 5%;
+			    text-align: center;
+			    padding-left: 0.5%;
+			    padding-right: 0.5%;
+			}
+
+			.navbar-nav .nav-item+.nav-item {
+    			margin-left: 0%
+			}
+			.lightbox{		
+			    padding-top: 5%;
+			    padding-bottom: 5%;
+			    width: 100%;
+			    display: inline-block;
+			    position: fixed;
+			    z-index: 111;
+			    background-color: rgba(21, 20, 20, 0.75);
+			    overflow: hidden;
+			    height: 100%;
+			    text-align: center;
+			}
+
+			.lightbox > img{
+				max-width: 100%;
+				max-height: 780px;
+				margin:auto;
+			}
+
+			.search{
+				background: none;
+				border:none;
+			}
+
+			pre, code{
+				background-color: #444;
+			    color: #31b0d5;
+			    padding: 10px;
+			}
+		
+
+			.img-polaroid, .img-thumbnail {
+				margin-right: 10px;
+			}
+
+			#mapid { 
+				height: 180px; 
+				position:relative; 
+				top:0; 
+				bottom:0; 
+				width:100%; 
+			}
+
+			.article_en_une{
+				width: 48%;
+			    float: left;
+			    display: inline-block;
+			    min-height: 300px;
+			    margin: 1%;
+			    border: 1px solid #ddd;
+			}
+			.article_en_une h2{
+				    font-size: 21px;
+				    /*font-weight: bold;*/
+				    text-transform: uppercase;
+			}
+
+			.article_en_une img{
+				width: 100%;
+				max-height: 200px;
+    			object-fit: cover;
+			}
+
+			@media screen and (max-width: 720px) {
+				.navbar-nav .nav-item {
+  					width:100%;
+				}
+				iframe, video{
+					width:100%;
+				}
+				.bd-masthead{
+					background-size: cover;
+				}
+				
+			}
+
+
+        </style>
+
+    </head>
+    <body>
+
+		
+    	<nav class="navbar navbar-dark bg-inverse" style="border-radius:0px">	
+    		<button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2">&#9776;</button>
+ 			<div class="collapse navbar-toggleable-xs" id="exCollapsingNavbar2">
+				<ul class="nav navbar-nav">
+			    	<li class="nav-item {% if  app.request.attributes.get('_route') == 'cms_blog_home' %}active {% endif %}">
+						<a class="nav-link "  href="{{ path('cms_blog_home')}}" > <i class="fa fa-home fa-fw"></i> {{ 'Blog'|trans}}</a>
+				    </li>
+			    	 {{ render(controller('CMSBlogBundle:Category:listMenu', {'originalRequest': app.request })) }}
+			    	
+			    	<li class="nav-item {% if  app.request.attributes.get('_route') == 'cms_blog_rand' %}active {% endif %}">
+						<a class="nav-link"  href="{{ path('cms_blog_rand')}}"><i class="fa fa-random"></i> {{ 'Random'|trans}}</a>
+					</li>
+			    	<li class="nav-item {% if  app.request.attributes.get('_route') == 'contact_show' %}active {% endif %}">
+						<a class="nav-link"  href="{{ path('contact_show')}}"><i class="fa fa-question-circle" ></i> {{ 'About'|trans}}</a>
+					</li>
+				</ul>
+			</div>
+	  		<button class="search" id="toggle-search" type="button" data-toggle="toggle" data-target="#exCollapsingNavbarSearch" style="float:right";>
+	    		<i class="fa fa-search"></i>
+	  		</button>
+			<form id="search" style="display:none" class="form-inline pull-xs-right" action="../recherche/"><input id="search-input" type="text" placeholder="{{'Rechercher'|trans}}" name="query"/> <button type="submit" id="search-submit" class="search"><i class="fa fa-search"></i></button></form>
+		</nav>
+        
+    	{#<main class="bd-masthead" id="content" role="main" style="background-image:url({% if article is not defined or article.thumb is  null  %}'http://localhost/img/fond.jpg'{% else %}{{ asset('uploads/'~ article.thumb.picture ) }}{% endif %}); height: 450px;background-position: center;">#}
+    	<main class="bd-masthead" id="content" role="main" style="background-image:url({% if article is not defined or article.thumb is null  %}'{{ asset('images/marina.jpg') }}' {% else %}{{ asset('uploads/'~ article.thumb.picture ) }}{% endif %}); height: 450px;background-position: center;">
+			<div class="container">
+				
+
+			</div>
+		</main>
+        
+        <div class="container fill" style="position: relative;
+    top: -150px;
+    background-color: white;
+   /* box-shadow: 0px 0px 10px black;*/
+    " >
+	<a id="fb_share" style="font-size: 2em;color: rgba(151, 150, 150, 0.62);position: absolute;top: -40px;background-color: rgba(10, 10, 10, 0.47);left: 0px;height: 1em;padding: 0;line-height: 1em;"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+   
+        	{% block body %}{% endblock %}
+        </div>
+        <footer class="bd-footer text-muted" role="contentinfo">
+			<div class="container">
+				<ul class="bd-footer-links">
+				</ul>
+				<p>{{'Dévellopé par'|trans}} <a href="https://twitter.com/darkironLyon" target="_blank">@darkiron</a>.</p>
+				<p>{{ 'Design by Dakiron - 2016 - Tous droit réservé.'|trans}}</p>
+				<p><a href="#" type="button" data-toggle="modal" data-target="#modalMap">{{'Blog "Made in France"'}}</a>{{' Qui devrais être sponsorisez par Arnaud Montbourg :)'|trans}}</p>
+			</div>
+			<!-- Modal -->
+				<div class="modal fade" id="modalMap" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="myModalLabel">{{"Où c\'est fait ?"|trans}}</h4>
+							</div>
+							<div class="modal-body">
+								<div id="mapid"></div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">{{'Ok'|trans}}</button>
+								
+							</div>
+						</div>
+					</div>
+				</div><!-- modal end -->
+		</footer>
+        {% block javascripts %}
+        	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+        	<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+			<script id="dsq-count-scr" src="//blogdarkiron.disqus.com/count.js" async></script>
+			<script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+			<script type="text/javascript">
+				$(document).ready(function(){
+					$('#fb_share').on('click', function(){
+						 FB.ui({
+							  method: 'share',
+							  href : '{{ app.request.uri }}',
+						}, function(response){});
+					});
+					$('#modalMap').on('shown.bs.modal', function () { // chooseLocation is the id of the modal.
+					    map.invalidateSize();
+					 });
+					L.mapbox.accessToken = 'TOken';
+					var map = L.mapbox.map('mapid', 'token').setView([45.762474,4.830742], 13);
+
+					$('.fancybox').each(function(){
+						$(this).click(function(event){
+							event.preventDefault();
+							var image = $(this).find('img').attr('src');
+							console.log('image')
+							$('body').prepend('<div class="lightbox"><img src="'+ image +'"></div>');
+							$('div.lightbox').click(function(){
+								$(this).toggle();
+								$(this).remove();
+							});
+						});
+
+					})
+
+					$('#toggle-search').on('click',function(event){
+						$(this).toggle();
+						event.preventDefault();
+						$('#search').toggle();
+					});
+
+					$('#search-submit').on('click',function(event){
+						event.preventDefault();
+						var url = $(this).parent().attr('action');
+						if($(this).parent().find('#search-input').val() != ''){	
+							url = url + $(this).parent().find('#search-input').val();
+							window.location = url;
+						}
+						$(this).parent().toggle();
+						$('#toggle-search').toggle();
+					})
+				});
+
+        		
+				console.log(document.body.clientWidth )
+				if(document.body.clientWidth <= 740){
+
+				$('iframe').width('100%');
+				}
+        	</script>
+	        <script>
+				window.fbAsyncInit = function() {
+					FB.init({
+						appId      : '1222528917765881',
+						xfbml      : true,
+						version    : 'v2.6'
+					});
+				};
+
+				(function(d, s, id){
+					var js, fjs = d.getElementsByTagName(s)[0];
+					if (d.getElementById(id)) {return;}
+						js = d.createElement(s); js.id = id;
+						js.src = "//connect.facebook.net/en_US/sdk.js";
+						fjs.parentNode.insertBefore(js, fjs);
+				}(document, 'script', 'facebook-jssdk'));
+			</script>
+   
+        	<script type="text/javascript">
+		   var _gaq = _gaq || [];
+		   _gaq.push(['_setAccount', 'token']);
+		   _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		
+			</script>
+			
+
+        
+        {% endblock %}
+    </body>
+</html>

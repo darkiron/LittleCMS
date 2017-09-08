@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en" ng-app="RDash">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>RDash AngularJS</title>
+  <!-- STYLES -->
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.min.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/admin.min.css')}}">
+  
+  <script type="text/javascript" src="js/dashboard.min.js"></script>
+
+  <style>
+    body{
+      font-family: 'Source Sans Pro';
+    }
+    .lightbox{    
+          padding-top: 5%;
+          padding-bottom: 5%;
+          width: 100%;
+          display: inline-block;
+          position: fixed;
+          z-index: 11111;
+          background-color: rgba(21, 20, 20, 0.75);
+          overflow: hidden;
+          height: 100%;
+          text-align: center;
+      }
+
+      .lightbox > img{
+        max-width: 100%;
+        max-height: 780px;
+        margin:auto;
+      }
+
+      .ui-view{
+      	margin-left: 20px;
+      }
+  </style>
+</head>
+<body ng-controller="MasterCtrl">
+  <div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
+
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+      <ul class="sidebar">
+        <li class="sidebar-main">
+          <a ng-click="toggleSidebar()">
+            Dashboard
+            <i class="fa fa-exchange" aria-hidden="true"></i>
+          </a>
+        </li>
+        <li class="sidebar-title"><span>NAVIGATION</span></li>
+        <li class="sidebar-list"><a href="{{ path('admin_index') }}">{{'Home'|trans }} <span class="menu-icon fa fa-tachometer"></span> </a></li>
+          <li class="sidebar-list"><a href="{{ path('admin_articles') }}"><span class="menu-icon fa fa-hashtag"></span> {{'Articles'|trans }}</a></li>
+          <li class="sidebar-list"><a href="{{ path('admin_images_index') }}"><span class="menu-icon fa fa-picture-o"></span> {{'Images'|trans }}</a></li>
+          <li class="sidebar-list"><a href=""><span class="menu-icon fa fa-comment"></span> {{'Commentaires'|trans }}</a></li>
+          <li class="sidebar-list"><a href=""><span class="menu-icon fa fa-sitemap"></span> {{'Categories'|trans }}</a></li>
+          <li class="sidebar-list"><a href=""><span class="menu-icon fa fa-folder-open"></span> {{'Dossier'|trans }}</a></li>
+          <li class="sidebar-list"><a href=""><span class="menu-icon fa fa-tags"></span> {{'Tags'|trans }}</a></li>
+          <li class="sidebar-list"><a href=""><span class="menu-icon fa fa-users"></span> {{'users'|trans }}</a></li>
+          <li class="sidebar-list"><a href="{{ path('contact_show') }}"><span class="menu-icon fa fa-users"></span> {{'About'|trans }}</a></li>
+      </ul>
+      <div class="sidebar-footer">
+        <div class="col-xs-4">
+          <a href=""><span class="menu-icon fa fa-power-off"></span></a>
+        </div>
+        
+        
+      </div>
+    </div>
+    <!-- End Sidebar -->
+
+    <div id="content-wrapper">
+      <div class="page-content">
+
+        <!-- Header Bar -->
+        <div class="row header">
+          <div class="col-xs-12">
+            <div class="user pull-right">
+              <div class="item dropdown" uib-dropdown>
+                <a href="#" class="dropdown-toggle" uib-dropdown-toggle>
+                  <img src="img/avatar.jpg">
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li class="dropdown-header">
+                    Joe Bloggs
+                  </li>
+                  <li class="divider"></li>
+                  <li class="link">
+                    <a href="#">
+                      Profile
+                    </a>
+                  </li>
+                  <li class="link">
+                    <a href="#">
+                      Menu Item
+                    </a>
+                  </li>
+                  <li class="link">
+                    <a href="#">
+                      Menu Item
+                    </a>
+                  </li>
+                  <li class="divider"></li>
+                  <li class="link">
+                    <a href="#">
+                      Logout
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="item dropdown" uib-dropdown>
+               <a href="#" class="dropdown-toggle" uib-dropdown-toggle>
+                  <i class="fa fa-bell-o"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li class="dropdown-header">
+                    Notifications
+                  </li>
+                  <li class="divider"></li>
+                  <li>
+                    <a href="#">Server Down!</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="meta">
+              <div class="page">
+                Dashboard
+              </div>
+              <div class="breadcrumb-links">
+                Home / Dashboard
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Header Bar -->
+
+        <!-- Main Content -->
+        <div class="ui-view">
+          {% block body %}
+          {% endblock %}
+        </div>
+
+      </div><!-- End Page Content -->
+    </div><!-- End Content Wrapper -->
+  </div><!-- End Page Wrapper -->
+   {% block javascripts %}
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+          <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+            <script type="text/javascript">
+        $(document).ready(function(){
+          $('.ligthbox').each(function(){
+            $(this).click(function(event){
+              event.preventDefault();
+              var image = $(this).find('img').attr('src');
+              console.log(image)
+              $('body').prepend('<div class="lightbox"><img src="'+ image +'"></div>');
+              $('div.lightbox').click(function(){
+                $(this).toggle();
+                $(this).remove();
+              });
+            });
+
+          })
+        });
+      </script>
+        
+        {% endblock %}
+</body>
+</html>

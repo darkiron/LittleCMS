@@ -1,0 +1,73 @@
+{% extends '/admin/layout.html.twig' %}
+
+{% block body %}
+
+<div class="row">
+	<div class="col-md-6">
+   
+		{{ form_start(form)}}
+
+		<fieldset class="form-group">
+			{{ form_label(form.title)}}
+			{{ form_widget(form.title, { 'attr': { 'class' : 'form-control'} } ) }}
+			{{ form_errors(form.title)}}
+		</fieldset>
+		<fieldset class="form-group">
+			{{ form_label(form.description)}}
+			{{ form_widget(form.description, { 'attr': { 'class' : 'form-control', 'style':'height:150px;'} } ) }}
+			{{ form_errors(form.description)}}
+		</fieldset>
+		<fieldset class="form-group">
+			{{ form_label(form.datepublication)}}
+			{{ form_widget(form.datepublication, { 'attr': { 'class' : 'form-control'} } ) }}
+			{{ form_errors(form.datepublication)}}
+		</fieldset>
+		<fieldset class="form-group">
+			{{ form_label(form.datecreation)}}
+			{{ form_widget(form.datecreation, { 'attr': { 'class' : 'form-control'} } )  }}
+			{{ form_errors(form.datecreation)}}
+		</fieldset>
+		<fieldset class="form-group">
+			{{ form_label(form.category)}}
+			{{ form_widget(form.category, { 'attr': { 'class' : 'form-control'} } )  }}
+			{{ form_errors(form.category)}}
+		</fieldset>
+		<fieldset class="form-group">
+			{{ form_label(form.thumb)}}
+			{{ form_widget(form.thumb, { 'attr': { 'class' : 'form-control'} } ) }}
+			{{ form_errors(form.thumb)}}
+		</fieldset>
+
+		<fieldset class="form-group">
+			{{ form_label(form.metadescription)}}
+			{{ form_widget(form.metadescription, { 'attr': { 'class' : 'form-control'} } ) }}
+			{{ form_errors(form.metadescription)}}
+		</fieldset>
+
+
+		{{ form_widget(form.save, { 'attr': { 'class' : 'btn btn-primary"'} } ) }}
+
+
+		{{ form_end(form)}}
+	</div>
+	<div class="col-md-6">
+		<div id="view"></div>
+	</div>
+</div>
+
+{% for image in images %}
+	<img src="{{ asset('/uploads/'~image.picture)}}" class="img-thumbnail"  width="100px" alt="{{ image.alt}}" title="{{ image.alt}}" onclick="$('#article_thumb').val({{ image.id }});" />
+	{% else %}
+	{{"pas d\'images"|trans}}
+{% endfor %}
+
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+<script>
+$('#article_description').keydown(function(){
+	$('#view').html($(this).val());
+});
+</script>
+{% endblock %}
+

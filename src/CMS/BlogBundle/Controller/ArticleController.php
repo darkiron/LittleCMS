@@ -51,17 +51,9 @@ class ArticleController extends Controller
     }
 
     public function editAction(Request $request, Article $article){
-
-    
-
-        $user = $this->getUser();
-
         $images = $this->getDoctrine()->getManager()->getRepository('CMSBlogBundle:Image')->findAll();
       
-        $form = $this->createForm(ArticleType::class, $article)
-            ->add('save', SubmitType::class, array('label' => 'Create Article'))
-            ;
-            //->getForm();
+        $form = $this->newForm($article);
 
         $form->handleRequest($request);
 
@@ -82,6 +74,13 @@ class ArticleController extends Controller
 
     }
 
+    public function newForm(Article $article){
+        return $form = $this->createForm(ArticleType::class, $article)
+            ->add('save', SubmitType::class, array('label' => 'Create Article'))
+            ;
+            //->getForm();
+    }
+
     public function newAction(Request $request){
         // create a task and give it some dummy data for this example
         $article = new Article();
@@ -94,10 +93,8 @@ class ArticleController extends Controller
         $article->setDatecreation(new \DateTime());
         $article->setDatePublication(new \DateTime());
         $article->setUser($user);
-        $form = $this->createForm(ArticleType::class, $article)
-            ->add('save', SubmitType::class, array('label' => 'Create Article'))
-            ;
 
+        $form = $this->newForm($article);
 
         $form->handleRequest($request);
 
@@ -118,15 +115,15 @@ class ArticleController extends Controller
         }
 
     private function fullText($article){
-        if ($this->check_fullText($article->getId())){
+        if ($this->checkFullText($article->getId())){
             return $this->update_fullText($article);
         }
         else{
-            return $this->insert_fullText($article);
+            return $this->insertFullText($article);
         }
     }
 
-    private function check_fullText($id){
+    private function checkFullText($id){
         $em = $this->getDoctrine()->getManager();
 
         if(!$id =filter_var($id,FILTER_FLAG_ALLOW_OCTAL))
@@ -134,7 +131,6 @@ class ArticleController extends Controller
 
         $old_sql = $em->getConnection();
 
-        $data = array('id' => $id);
         $return = $old_sql->query('SELECT article_id FROM search WHERE article_id = ?')
                           ->bindValue(1, $id)
                           ->fetch();
@@ -156,7 +152,7 @@ class ArticleController extends Controller
 
     }
 
-    private function insert_fullText($article){
+    private function insertFullText($article){
         $em = $this->getDoctrine()->getManager();
 
         $old_sql = $em->getConnection();

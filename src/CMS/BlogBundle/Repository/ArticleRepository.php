@@ -40,7 +40,7 @@ class ArticleRepository extends \Doctrine\ORM\EntityRepository
 
 		$old = $this->_em->getConnection();
 
-		return $old->fetchAll("SELECT article_id FROM search WHERE MATCH(titre, description) AGAINST ('".$query."');");
+		return $old->fetchAll("SELECT article_id FROM search WHERE MATCH(titre, description) AGAINST ('".PDO::quote($query)."');");
 	}
 
 	public function getList($nb_result, $offset, $arrayid = null){

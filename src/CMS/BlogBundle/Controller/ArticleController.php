@@ -131,7 +131,7 @@ class ArticleController extends Controller
 
         $old_sql = $em->getConnection();
 
-        $data = array('id' => filter_var($id));
+        $data = array('id' => filter_var($id,FILTER_FLAG_ALLOW_OCTAL));
         $return = $old_sql->query('SELECT article_id FROM search WHERE article_id = '.$id)->fetch();
 
         if (is_array($return) && array_key_exists('article_id', $return)){

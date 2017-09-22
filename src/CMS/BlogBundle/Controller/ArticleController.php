@@ -74,8 +74,8 @@ class ArticleController extends Controller
 
     }
 
-    public function newForm(Article $article){
-        return $form = $this->createForm(ArticleType::class, $article)
+    private function newForm(Article $article){
+        return $this->createForm(ArticleType::class, $article)
             ->add('save', SubmitType::class, array('label' => 'Create Article'))
             ;
             //->getForm();
@@ -116,7 +116,7 @@ class ArticleController extends Controller
 
     private function fullText($article){
         if ($this->checkFullText($article->getId())){
-            return $this->update_fullText($article);
+            return $this->updateFullText($article);
         }
         else{
             return $this->insertFullText($article);
@@ -142,7 +142,7 @@ class ArticleController extends Controller
         return false;
     }
 
-    private function update_fullText($article){
+    private function updateFullText($article){
         $em = $this->getDoctrine()->getManager();
 
         $old_sql = $em->getConnection();

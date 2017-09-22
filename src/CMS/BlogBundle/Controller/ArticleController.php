@@ -55,7 +55,18 @@ class ArticleController extends Controller
       
         $form = $this->newForm($article);
 
-        $form->handleRequest($request);
+        return $this->render('article/new.html.twig', array(
+                'form' => $form->createView(),'images'=> $images,
+            ));
+
+    }
+
+    private function newForm(Article $article){
+        $form = $this->createForm(ArticleType::class, $article)
+                     ->add('save', SubmitType::class, array('label' => 'Create Article'))
+            ;
+
+            $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // ... perform some action, such as saving the task to the database
@@ -65,20 +76,10 @@ class ArticleController extends Controller
 
             $this->fullText($article);
 
-            return $this->redirectToRoute('article_show', array('id'=> $article->getId()));
+            return $this->redirectToRoute('article_show', array('id'=> $article->getId() ));
         }
-
-        return $this->render('article/new.html.twig', array(
-                'form' => $form->createView(),'images'=> $images,
-            ));
-
-    }
-
-    private function newForm(Article $article){
-        return $this->createForm(ArticleType::class, $article)
-            ->add('save', SubmitType::class, array('label' => 'Create Article'))
-            ;
-            //->getForm();
+        
+        return $form;
     }
 
     public function newAction(Request $request){
@@ -96,23 +97,10 @@ class ArticleController extends Controller
 
         $form = $this->newForm($article);
 
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            // ... perform some action, such as saving the task to the database
-            $article->setSlug(str_replace(' ', '_' , $article->getTitle())); 
-            $this->getDoctrine()->getManager()->persist($article);
-            $this->getDoctrine()->getManager()->flush();
-
-            $this->fullText($article);
-
-            return $this->redirectToRoute('article_show', array('id'=> $article->getId() ));
-        }
-
-            return $this->render('article/new.html.twig', array(
+        return $this->render('article/new.html.twig', array(
                 'form' => $form->createView(),'images'=> $images
-            ));
-        }
+        ));
+    }
 
     private function fullText($article){
         if ($this->checkFullText($article->getId())){

@@ -129,10 +129,15 @@ class ArticleController extends Controller
     private function check_fullText($id){
         $em = $this->getDoctrine()->getManager();
 
+        if(!$id =filter_var($id,FILTER_FLAG_ALLOW_OCTAL))
+            $id = null;
+
         $old_sql = $em->getConnection();
 
-        $data = array('id' => filter_var($id,FILTER_FLAG_ALLOW_OCTAL));
-        $return = $old_sql->query('SELECT article_id FROM search WHERE article_id = '.$id)->fetch();
+        $data = array('id' => $id);
+        $return = $old_sql->query('SELECT article_id FROM search WHERE article_id = ?')
+                          ->bindValue(1, $id)
+                          ->fetch();
 
         if (is_array($return) && array_key_exists('article_id', $return)){
             return true;

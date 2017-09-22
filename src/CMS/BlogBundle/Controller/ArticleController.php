@@ -51,19 +51,22 @@ class ArticleController extends Controller
     }
 
     public function editAction(Request $request, Article $article){
-
-    
-
-        $user = $this->getUser();
-
         $images = $this->getDoctrine()->getManager()->getRepository('CMSBlogBundle:Image')->findAll();
       
-        $form = $this->createForm(ArticleType::class, $article)
-            ->add('save', SubmitType::class, array('label' => 'Create Article'))
-            ;
-            //->getForm();
+        $form = $this->newForm($article);
 
-        $form->handleRequest($request);
+        return $this->render('article/new.html.twig', array(
+                'form' => $form->createView(),'images'=> $images,
+            ));
+
+    }
+
+    private function newForm(Article $article){
+        $form = $this->createForm(ArticleType::class, $article)
+                     ->add('save', SubmitType::class, array('label' => 'Create Article'))
+            ;
+
+            $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // ... perform some action, such as saving the task to the database
@@ -73,13 +76,10 @@ class ArticleController extends Controller
 
             $this->fullText($article);
 
-            return $this->redirectToRoute('article_show', array('id'=> $article->getId()));
+            return $this->redirectToRoute('article_show', array('id'=> $article->getId() ));
         }
-
-        return $this->render('article/new.html.twig', array(
-                'form' => $form->createView(),'images'=> $images,
-            ));
-
+        
+        return $form;
     }
 
     public function newAction(Request $request){
@@ -94,45 +94,34 @@ class ArticleController extends Controller
         $article->setDatecreation(new \DateTime());
         $article->setDatePublication(new \DateTime());
         $article->setUser($user);
-        $form = $this->createForm(ArticleType::class, $article)
-            ->add('save', SubmitType::class, array('label' => 'Create Article'))
-            ;
 
+        $form = $this->newForm($article);
 
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            // ... perform some action, such as saving the task to the database
-            $article->setSlug(str_replace(' ', '_' , $article->getTitle())); 
-            $this->getDoctrine()->getManager()->persist($article);
-            $this->getDoctrine()->getManager()->flush();
-
-            $this->fullText($article);
-
-            return $this->redirectToRoute('article_show', array('id'=> $article->getId() ));
-        }
-
-            return $this->render('article/new.html.twig', array(
+        return $this->render('article/new.html.twig', array(
                 'form' => $form->createView(),'images'=> $images
-            ));
-        }
+        ));
+    }
 
     private function fullText($article){
-        if ($this->check_fullText($article->getId())){
-            return $this->update_fullText($article);
+        if ($this->checkFullText($article->getId())){
+            return $this->updateFullText($article);
         }
         else{
-            return $this->insert_fullText($article);
+            return $this->insertFullText($article);
         }
     }
 
-    private function check_fullText($id){
+    private function checkFullText($id){
         $em = $this->getDoctrine()->getManager();
+
+        if(!$id =filter_var($id,FILTER_FLAG_ALLOW_OCTAL))
+            $id = null;
 
         $old_sql = $em->getConnection();
 
-        $data = array('id' => $id);
-        $return = $old_sql->query('SELECT article_id FROM search WHERE article_id = '.$id)->fetch();
+        $return = $old_sql->query('SELECT article_id FROM search WHERE article_id = ?')
+                          ->bindValue(1, $id)
+                          ->fetch();
 
         if (is_array($return) && array_key_exists('article_id', $return)){
             return true;
@@ -141,7 +130,7 @@ class ArticleController extends Controller
         return false;
     }
 
-    private function update_fullText($article){
+    private function updateFullText($article){
         $em = $this->getDoctrine()->getManager();
 
         $old_sql = $em->getConnection();
@@ -151,7 +140,7 @@ class ArticleController extends Controller
 
     }
 
-    private function insert_fullText($article){
+    private function insertFullText($article){
         $em = $this->getDoctrine()->getManager();
 
         $old_sql = $em->getConnection();

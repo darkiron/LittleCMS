@@ -40,9 +40,12 @@ class ArticleRepository extends \Doctrine\ORM\EntityRepository
 
 		$old = $this->_em->getConnection();
 
-		return $old->query("SELECT article_id FROM search WHERE MATCH(titre, description) AGAINST ('?');")
-			->bindValue(1, $old->quote($query))
-			->fetchAll();
+		$stmt = $old->prepare("SELECT article_id FROM search WHERE MATCH(titre, description) AGAINST (:query);");
+		$stmt->bindValue(':query',$old->quote($query));
+		$stmt->execute();
+
+		return $stmt->fetchAll() ;
+
 	}
 
 	public function getList($nb_result, $offset, $arrayid = null){

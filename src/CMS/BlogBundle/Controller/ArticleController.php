@@ -55,6 +55,10 @@ class ArticleController extends Controller
       
         $form = $this->newForm($article);
 
+        if($article = $this->addNew($request, $article, $form)){
+            return $this->redirectToRoute('article_show', array('id'=> $article->getId() ));
+        }
+
         return $this->render('article/new.html.twig', array(
                 'form' => $form->createView(),'images'=> $images,
             ));
@@ -66,7 +70,13 @@ class ArticleController extends Controller
                      ->add('save', SubmitType::class, array('label' => 'Create Article'))
             ;
 
-            $form->handleRequest($request);
+        return $form;
+    }
+
+
+    private function addNew(Request $request,Article $article, $form){
+
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // ... perform some action, such as saving the task to the database
@@ -76,10 +86,10 @@ class ArticleController extends Controller
 
             $this->fullText($article);
 
-            return $this->redirectToRoute('article_show', array('id'=> $article->getId() ));
+            return $article;
         }
         
-        return $form;
+        return false;
     }
 
     public function newAction(Request $request){
@@ -96,6 +106,10 @@ class ArticleController extends Controller
         $article->setUser($user);
 
         $form = $this->newForm($article);
+
+        if($article = $this->addNew($request, $article, $form)){
+            return $this->redirectToRoute('article_show', array('id'=> $article->getId() ));
+        }
 
         return $this->render('article/new.html.twig', array(
                 'form' => $form->createView(),'images'=> $images
@@ -114,16 +128,19 @@ class ArticleController extends Controller
     private function checkFullText($id){
         $em = $this->getDoctrine()->getManager();
 
-        if(!$id =filter_var($id,FILTER_FLAG_ALLOW_OCTAL))
+        if(!$id =filter_var($id,FILTER_VALIDATE_INT)){
             $id = null;
+        }
 
-        $old_sql = $em->getConnection();
+        $old = $em->getConnection();
 
-        $return = $old_sql->query('SELECT article_id FROM search WHERE article_id = ?')
-                          ->bindValue(1, $id)
-                          ->fetch();
+        $stmt = $old->prepare("SELECT article_id FROM search WHERE article_id = :id;");
+        $stmt->bindValue(':id',$id);
+        $stmt->execute();
 
-        if (is_array($return) && array_key_exists('article_id', $return)){
+        $result =  $stmt->fetchAll() ;
+
+        if (is_array($result) && array_key_exists('article_id', $result)){
             return true;
         }
 

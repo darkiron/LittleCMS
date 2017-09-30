@@ -22,3 +22,6 @@ login_route_admin:
     path:  /admin/login
     defaults: { _controller: CMSBlogBundle:Security:login }
 
+auth-tokens:
+    type:     rest
+    resource: CMS/BlogBundle/Controller/AuthTokenController

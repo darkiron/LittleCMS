@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * AuthToken
  *
+ * @ORM\Entity()
  * @ORM\Table(name="auth_token",
  *      uniqueConstraints={@ORM\UniqueConstraint(name="auth_tokens_value_unique", columns={"value"})})
  */

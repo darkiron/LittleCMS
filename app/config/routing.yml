@@ -2,10 +2,6 @@ cms_blog:
     resource: "@CMSBlogBundle/Resources/config/routing.yml"
     prefix:   /
 
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
-
 # app/config/routing.yml
 user_registration:
     path:     /register
@@ -26,7 +22,3 @@ login_route_admin:
     path:  /admin/login
     defaults: { _controller: CMSBlogBundle:Security:login }
 
-#login_check_admin:
-#    path: /admin/login_check
-    # no controller is bound to this route
-    # as it's handled by the Security system

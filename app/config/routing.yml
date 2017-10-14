@@ -29,3 +29,7 @@ auth-tokens:
 articles:
     type:    rest
     resource: CMS\BlogBundle\Controller\ArticleRestController
+
+images:
+    type:    rest
+    resource: CMS\BlogBundle\Controller\ImageRestController

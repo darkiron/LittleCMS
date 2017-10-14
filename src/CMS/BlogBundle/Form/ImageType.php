@@ -20,14 +20,18 @@ class ImageType extends AbstractType
             ->add('alt')
         ;
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'CMS\BlogBundle\Entity\Image'
-        ));
+        $resolver->setDefaults(
+          [
+            'data_class' => 'CMS\BlogBundle\Entity\Image',
+            'csrf_protection' => false,
+          ]
+
+        );
     }
 }

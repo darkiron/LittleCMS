@@ -24,4 +24,8 @@ login_route_admin:
 
 auth-tokens:
     type:     rest
-    resource: CMS/BlogBundle/Controller/AuthTokenController
+    resource: CMS\BlogBundle\Controller\AuthTokenController
+
+articles:
+    type:    rest
+    resource: CMS\BlogBundle\Controller\ArticleRestController

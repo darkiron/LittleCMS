@@ -52,7 +52,7 @@ class ArticleController extends Controller
 
     public function editAction(Request $request, Article $article){
         $images = $this->getDoctrine()->getManager()->getRepository('CMSBlogBundle:Image')->findAll();
-      
+
         $form = $this->newForm($article);
 
         if($article = $this->addNew($request, $article, $form)){
@@ -80,7 +80,7 @@ class ArticleController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             // ... perform some action, such as saving the task to the database
-            $article->setSlug(str_replace(' ', '_' , $article->getTitle())); 
+            $article->setSlug(str_replace(' ', '_' , $article->getTitle()));
             $this->getDoctrine()->getManager()->persist($article);
             $this->getDoctrine()->getManager()->flush();
 
@@ -88,7 +88,7 @@ class ArticleController extends Controller
 
             return $article;
         }
-        
+
         return false;
     }
 
@@ -99,8 +99,8 @@ class ArticleController extends Controller
         $images = $this->getDoctrine()->getManager()->getRepository('CMSBlogBundle:Image')->findAll();
 
         $user = $this->getUser();
-        
-       
+
+
         $article->setDatecreation(new \DateTime());
         $article->setDatePublication(new \DateTime());
         $article->setUser($user);

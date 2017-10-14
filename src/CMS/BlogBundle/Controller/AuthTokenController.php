@@ -1,5 +1,5 @@
-# src/AppBundle/Controller/AuthTokenController.php
 <?php
+
 namespace CMS\BlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -7,9 +7,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest; // alias pour toutes les annotations
-use BlogBundle\Form\Type\CredentialsType;
-use BlogBundle\Entity\AuthToken;
-use BlogBundle\Entity\Credentials;
+use CMS\BlogBundle\Form\CredentialsType;
+use CMS\BlogBundle\Entity\AuthToken;
+use CMS\BlogBundle\Entity\Credentials;
 
 class AuthTokenController extends Controller
 {
@@ -27,10 +27,10 @@ class AuthTokenController extends Controller
         if (!$form->isValid()) {
             return $form;
         }
-
+  
         $em = $this->get('doctrine.orm.entity_manager');
 
-        $user = $em->getRepository('BlogBundle:User')
+        $user = $em->getRepository('CMSBlogBundle:User')
             ->findOneByEmail($credentials->getLogin());
 
         if (!$user) { // L'utilisateur n'existe pas

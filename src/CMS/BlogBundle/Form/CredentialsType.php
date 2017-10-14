@@ -1,6 +1,6 @@
-# src/AppBundle/Form/Type/CredentialsType.php
 <?php
-namespace BlogBundle\Form\Type;
+
+namespace CMS\BlogBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,9 +16,11 @@ class CredentialsType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => 'BlogBundle\Entity\Credentials',
-            'csrf_protection' => false
-        ]);
+        $resolver->setDefaults(
+					[
+            'data_class' => 'CMS\BlogBundle\Entity\Credentials',
+            'csrf_protection' => false,
+        	]
+			);
     }
 }

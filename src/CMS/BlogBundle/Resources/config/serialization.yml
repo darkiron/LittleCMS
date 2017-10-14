@@ -1,17 +1,15 @@
-BlogBundle\Entity\User:
+CMS\BlogBundle\Entity\User:
     attributes:
         id:
             groups: ['user', 'preference', 'auth-token']
-        firstname:
-            groups: ['user', 'preference', 'auth-token']
-        lastname:
+        username:
             groups: ['user', 'preference', 'auth-token']
         email:
             groups: ['user', 'preference', 'auth-token']
         preferences:
             groups: ['user']
 
-BlogBundle\Entity\AuthToken:
+CMS\BlogBundle\Entity\AuthToken:
     attributes:
         id:
             groups: ['auth-token']

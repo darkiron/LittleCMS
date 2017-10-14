@@ -6,3 +6,15 @@ BlogBundle\Entity\Credentials:
         password:
             - NotBlank: ~
             - Type: string
+
+BlogBundle\Entity\Article:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: email
+    properties:
+        title:
+            - NotBlank: ~
+            - Type: string
+        description:
+            - NotBlank: ~
+            - Type: string
+      

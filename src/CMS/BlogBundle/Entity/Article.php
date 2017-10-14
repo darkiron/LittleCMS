@@ -65,7 +65,7 @@ class Article
     /**
      * @var string
      *
-     * 
+     *
      * @ORM\ManyToOne(targetEntity="CMS\BlogBundle\Entity\Image")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -79,13 +79,13 @@ class Article
 
     /**
      * @ORM\OneToMany(targetEntity="CMS\BlogBundle\Entity\Reply", mappedBy="article")
-     * 
+     *
     */
     private $replies;
 
     /**
      * @ORM\ManyToOne(targetEntity="CMS\BlogBundle\Entity\User")
-     * 
+     *
     */
     private $user;
 
@@ -275,9 +275,9 @@ class Article
      *
      * @return Article
      */
-    public function setSlug($slug)
+    public function setSlug()
     {
-        $this->slug = $slug;
+        $this->slug = str_replace(' ', '_' , $this->title);
 
         return $this;
     }

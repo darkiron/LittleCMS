@@ -32,6 +32,8 @@ framework:
     fragments:       ~
     http_method_override: true
     assets: ~
+    serializer:
+        enabled: true
 
 # Twig Configuration
 twig:
@@ -67,3 +69,38 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+# fos_rest:
+#     routing_loader:
+#         include_format: true
+#     view:
+#         view_response_listener: true
+
+fos_rest:
+    param_fetcher_listener: true
+    body_listener: true
+    format_listener: true
+    view:
+        view_response_listener: 'force'
+        formats:
+            xml: true
+            json : true
+        templating_formats:
+            html: true
+        force_redirects:
+            html: true
+        failed_validation: HTTP_BAD_REQUEST
+        default_engine: twig
+    routing_loader:
+        default_format: json
+
+
+nelmio_cors:
+        defaults:
+            allow_credentials: false
+            allow_origin: ['*']
+            allow_headers: ['*']
+            allow_methods: ['POST', 'PUT', 'GET', 'DELETE']
+            max_age: 3600
+            hosts: []
+            origin_regex: false

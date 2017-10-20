@@ -39,21 +39,22 @@ class ArticleType extends AbstractType
             ->add('datepublication')
             ->add('datecreation')
             ->add('category',  EntityType::class, array('class' => 'CMSBlogBundle:Category',  'choice_label' => 'title',))
-            //->add('thumb',  EntityType::class, array('class' => 'CMSBlogBundle:Image',  'choice_label' => 'alt', 'data_class' => null))
             ->add('thumb',  TextType::class, array('invalid_message'=> 'Id d\'image pas valide !'))
-            //->add('thumb')
         ;
 
         $builder->get('thumb')->addModelTransformer( new ImageToNumberTransformer($this->manager));
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'CMS\BlogBundle\Entity\Article'
-        ));
+        $resolver->setDefaults(
+          [
+            'data_class' => 'CMS\BlogBundle\Entity\Article',
+            'csrf_protection' => false,
+          ]
+        );
     }
 }

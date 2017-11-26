@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class UserCommand extends ContainerAwareCommand
+class PromoteUserCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
@@ -41,7 +41,7 @@ class UserCommand extends ContainerAwareCommand
 
             $user->setRoles($input->getOption('role'));
 
-          
+
             $doctrine->getManager()->persist($user);
             $doctrine->getManager()->flush();
 
@@ -50,7 +50,7 @@ class UserCommand extends ContainerAwareCommand
             $text = $name.' has not promoted';
         }
 
-        
+
 
         $output->writeln($text);
     }

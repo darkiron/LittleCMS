@@ -57,7 +57,7 @@ class User implements UserInterface, \Serializable
      *
      * @ORM\Column(name="roles", type="string", length=255)
      */
-    private $roles; 
+    private $roles;
 
 
     /**
@@ -173,7 +173,7 @@ class User implements UserInterface, \Serializable
         // $this->salt = md5(uniqid(null, true));
     }
 
-    
+
 
     public function getSalt()
     {
@@ -261,14 +261,17 @@ class User implements UserInterface, \Serializable
      *
      * @return User
      */
-    public function setRole($role)
+    public function addRole($role)
     {
-        $this->role = $role;
+        $roles = unserialize($this->roles);
+        $roles[] = $role;
+
+        $this->roles = serialize($roles);
 
         return $this;
     }
 
-   
+
 
     /**
      * Set roles
@@ -277,12 +280,15 @@ class User implements UserInterface, \Serializable
      *
      * @return User
      */
-    public function setRoles($roles)
+    public function setRoles(Array $roles)
     {
-        $tab_roles = unserialize($this->roles);
-        $tab_roles[] = $roles;
+        $tabRoles = unserialize($this->roles);
 
-        $this->roles = serialize($tab_roles);
+        foreach($roles as $role){
+          $tabRoles[] = $role;
+        }
+
+        $this->roles = serialize($tabRoles);
 
         return $this;
     }

@@ -8,23 +8,24 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class UserCommand extends ContainerAwareCommand
+class PromoteUserCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
         $this
             ->setName('user:promote')
-            ->setDescription('Greet someone')
+            ->setDescription('Promote user')
+            ->setHelp('Allows to create user')
             ->addArgument(
-                'name',
+                'username',
                 InputArgument::OPTIONAL,
-                'Who do you want to greet?'
+                'Who do you want promote?'
             )
-            ->addOption(
+            ->addArgument(
                 'role',
                 null,
                 InputOption::VALUE_REQUIRED,
-                'If set, the task will yell in uppercase letters'
+                'Role to promote user'
             )
         ;
     }
@@ -40,8 +41,6 @@ class UserCommand extends ContainerAwareCommand
         if ($user != null && $input->getOption('role')) {
 
             $user->setRoles($input->getOption('role'));
-
-          
             $doctrine->getManager()->persist($user);
             $doctrine->getManager()->flush();
 
@@ -49,9 +48,6 @@ class UserCommand extends ContainerAwareCommand
         } else {
             $text = $name.' has not promoted';
         }
-
-        
-
         $output->writeln($text);
     }
 }

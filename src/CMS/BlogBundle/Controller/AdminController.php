@@ -17,11 +17,11 @@ class AdminController extends Controller
     public function indexAction($page = 0)
     {
         return $this->render('admin/index.html.twig', array(
-        
+
         ));
     }
 
-   
+
    public function contactAction(Request $request){
 
    		$stat = new Statique;
@@ -35,7 +35,7 @@ class AdminController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             // ... perform some action, such as saving the task to the database
-  
+
             $this->getDoctrine()->getManager()->persist($stat);
             $this->getDoctrine()->getManager()->flush();
 
@@ -44,8 +44,8 @@ class AdminController extends Controller
 
 
    		return $this->render('admin/about.html.twig', array('form' => $form->createView()
-        
-        ));	
+
+        ));
    }
 
    public function createIndexAction(){
@@ -65,5 +65,5 @@ class AdminController extends Controller
 
    }
 
-    
+
 }

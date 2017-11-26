@@ -14,17 +14,18 @@ class PromoteUserCommand extends ContainerAwareCommand
     {
         $this
             ->setName('user:promote')
-            ->setDescription('Greet someone')
+            ->setDescription('Promote user')
+            ->setHelp('Allows to create user')
             ->addArgument(
-                'name',
+                'username',
                 InputArgument::OPTIONAL,
-                'Who do you want to greet?'
+                'Who do you want promote?'
             )
-            ->addOption(
+            ->addArgument(
                 'role',
                 null,
                 InputOption::VALUE_REQUIRED,
-                'If set, the task will yell in uppercase letters'
+                'Role to promote user'
             )
         ;
     }
@@ -40,8 +41,6 @@ class PromoteUserCommand extends ContainerAwareCommand
         if ($user != null && $input->getOption('role')) {
 
             $user->setRoles($input->getOption('role'));
-
-
             $doctrine->getManager()->persist($user);
             $doctrine->getManager()->flush();
 
@@ -49,9 +48,6 @@ class PromoteUserCommand extends ContainerAwareCommand
         } else {
             $text = $name.' has not promoted';
         }
-
-
-
         $output->writeln($text);
     }
 }

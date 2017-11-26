@@ -14,8 +14,8 @@ class CreateUserCommand extends ContainerAwareCommand
   protected function configure(){
     $this
       ->setName('user:create')
-      ->setDescription('Create new user.')
-      ->setHelp('Allows to create user.')
+      ->setDescription('Create new user')
+      ->setHelp('Allows to create user')
       ->addArgument('username', InputArgument::REQUIRED, 'The username of the user.')
       ->addArgument('email', InputArgument::REQUIRED, 'The email of the user.')
     ;
@@ -47,7 +47,7 @@ class CreateUserCommand extends ContainerAwareCommand
     $user->setPassword($Encodedpassword);
     $user->setEmail($input->getArgument('email'));
 
-    $user->addRole('ROLE_ADMIN');
+    $user->addRole('ROLE_SUPER_ADMIN');
 
     $em->persist($user);
     $em->flush();

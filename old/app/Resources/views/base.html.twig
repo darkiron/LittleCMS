@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: http://ogp.me/ns#">
+  <head>
+    <meta charset="utf-8"/>
+
+    <title>{% block title %}Darkiron's blog{% endblock %}</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" type="text/css" rel="stylesheet"/>
+    <link href="{{ asset('css/style') }}" type="text/css" rel="stylesheet"/>
+    <link href="{{ asset('css/font-awesome.min.css') }}" type="text/css" rel="stylesheet"/>
+
+    <meta name="description" content="{% block md %} Game & Dev: Symfony made in france blog eco-conception (php7){% endblock %}"/>
+    <meta name="keywords" content="{% block mk %} Game, Symfony, php, arma, eco-conception, ethique du web, way of life{% endblock %}"/>
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+
+    {% block og %}
+      <meta name="twitter:card" content="summary"/>
+      <meta name="twitter:title" content="{% if article is not defined  %}Darkiron' blog{% else %}{{ article.title}}{% endif %}"/>
+      <meta name="twitter:description" content="{% if article is not defined  %}Web ethique, eco-conception, way of life  et jeux-video{% else %}{{ article.metadescription}}{% endif %}"/>
+      <meta name="twitter:site" content="@darkironLyon" />
+      <meta name="twitter:image" content="{% if article is not defined or article.thumb is null  %}{{ app.request.getBaseURL() ~ asset('images/marina.jpg') }}{% else %}{{ app.request.getBaseURL() ~ asset('uploads/'~ article.thumb.picture ) }}{% endif %}"/>
+
+      <meta name="og:locale" content="fr_FR"/>
+      <meta name="og:title" content="{% if article is not defined  %}Darkiron' blog{% else %}{{ article.title}}{% endif %}"/>
+      <meta name="og:description" content="{% if article is not defined  %}Web ethique, eco-conception, way of life  et jeux-video{% else %}{{ article.metadescription}}{% endif %}"/>
+      <meta name="og:url" content="{{ app.request.uri }}"/>
+      <meta name="og:image" content="{% if article is not defined or article.thumb is null  %}{{ app.request.getBaseURL() ~ asset('images/marina.jpg') }}{% else %}{{ app.request.getBaseURL() ~ asset('uploads/'~ article.thumb.picture ) }}{% endif %}"/>
+      <meta name="og:type" content="{% if article is not defined  %}site{% else %}article{% endif %}"/>
+    {% endblock %}
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li class="{% if  app.request.attributes.get('_route') == 'cms_blog_home' %}active {% endif %}">
+          <a href="{{ path('cms_blog_home')}}"><i class="fa fa-home fa-fw"></i> {{ 'Blog'|trans }}</a>
+        </li>
+        {{ render(controller('CMSBlogBundle:Category:listMenu', {'originalRequest': app.request })) }}
+        <li class="{% if  app.request.attributes.get('_route') == 'cms_blog_rand' %}active {% endif %}">
+          <a href="{{ path('cms_blog_rand')}}"><i class="fa fa-random"></i> {{ 'Random'|trans}}</a>
+        </li>
+        <li class="{% if app.request.attributes.get('_route') == 'contact_show' %}active {% endif %}">
+          <a href="{{ path('contact_show')}}"><i class="fa fa-question"></i> {{'About'|trans}}</a>
+        </li>
+      </ul>
+
+      <div class="search-form">
+        <form id="search" action="{{ app.request.getBaseURL() ~ '/recherche/'}}" method="get">
+          <input type="text" name="query" />
+          <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+
+        <button class="search">
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
+    </nav>
+    <main class="bd-masthead" id="content" role="main" style="background-image:url({% if article is not defined or article.thumb is null  %}'{{ asset('images/marina.jpg') }}' {% else %}{{ asset('uploads/'~ article.thumb.picture ) }}{% endif %}); height: 450px;background-position: center;">
+      <div class="container">
+      </div>
+    </main>
+
+    <a id="fb_share" style="font-size: 2em;color: rgba(151, 150, 150, 0.62);position: absolute;top: -40px;background-color: rgba(10, 10, 10, 0.47);left: 0px;height: 1em;padding: 0;line-height: 1em;"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+
+    {% block body %}
+    {% endblock %}
+
+    <footer>
+      <p>
+        {{ 'Programmé et designé avec'|trans ~ ' ❤ ' ~ 'par :'|trans }} <a href="https://twitter.com/darkironLyon" target="_blank">@darkiron</a>
+      </p>
+      <p>
+        {{ 'Blog Made in France sous licence MIT - 2016 - 2018'|trans}} <a href="https://github.com/darkiron/LittleCMS"><i class="fa fa-github" aria-hidden="true"></i>
+ {{ 'fork me '|trans }}</a>
+      </p>
+      <p>
+        {{ 'Performance environnementale : 66.7 (B) - empreint GES : 1,67 gCO2e - empreint eau : 2,5 cl by'|trans }} <a hrf="http://www.ecoindex.fr/resultats/?id=20231">eco index</a>
+      </p>
+    </footer>
+
+    {% block javascripts %}
+      <script id="dsq-count-scr" src="//blogdarkiron.disqus.com/count.js" async></script>
+    {% endblock %}
+
+  </body>
+</html>

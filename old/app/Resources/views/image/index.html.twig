@@ -1,0 +1,41 @@
+{% extends '/admin/layout.html.twig' %}
+
+{% block body %}
+    <h1>Image list</h1>
+    <a href="{{ path('admin_images_new') }}" class="btn btn-primary">{{ 'nouvelle article'|trans}}</a>
+    <table class="table">
+        <thead class="thead-inverse">
+            <tr>
+                <th>Id</th>
+                <th>Picture</th>
+                <th>Alt</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for image in images %}
+            <tr>
+                <td><a href="{{ path('image_show', { 'id': image.id }) }}">{{ image.id }}</a></td>
+                <td><a class="ligthbox" href="{{ asset('uploads/'~image.picture )}}" ><img src="{{ asset('uploads/'~image.picture )}}" width="100px" height="50px"></a></td>
+                <td>{{ image.alt }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('image_show', { 'id': image.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('image_edit', { 'id': image.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('image_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

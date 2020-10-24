@@ -1,3 +1,0 @@
-cms_blog_homepage:
-    path:     /
-    defaults: { _controller: CMSBlogBundle:Default:index }

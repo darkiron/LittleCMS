@@ -1,0 +1,28 @@
+version: "3"
+services:
+    db:
+        image: postgres:latest
+        environment:
+            POSTGRES_PASSWORD: "symfony"
+            POSTGRES_USER: "symfony"
+            POSTGRES_DB: "symfony"
+
+    php:
+        build:
+            context: .
+            dockerfile: ./php/Dockerfile
+        links:
+            - db:postgres
+        volumes:
+            - ./app:/app
+
+    httpd:
+        image: httpd:latest
+        ports:
+            - "80:80"
+        volumes:
+            - ./app:/app
+            - ./httpd/conf:/usr/local/apache2/conf
+            - ./logs:/logs
+        links:
+            - php

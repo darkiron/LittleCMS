@@ -1,0 +1,18 @@
+article_index:
+    path:     /
+    defaults: { _controller: "CMSBlogBundle:Article:index" }
+    methods:  GET
+
+article_show:
+    path:     /{id}/show
+    defaults: { _controller: "CMSBlogBundle:Article:show" }
+    methods:  GET
+
+article_new: 
+    path:	/new 
+    defaults: { _controller: "CMSBlogBundle:Article:new"}
+
+article_edit:
+    path: /edit/{article}
+    defaults: { _controller: "CMSBlogBundle:Article:edit"}
+

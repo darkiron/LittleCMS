@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Reply list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Ip</th>
+                <th>Reply</th>
+                <th>Date</th>
+                <th>Mode</th>
+                <th>Author</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reply in replies %}
+            <tr>
+                <td><a href="{{ path('reply_show', { 'id': reply.id }) }}">{{ reply.id }}</a></td>
+                <td>{{ reply.email }}</td>
+                <td>{{ reply.ip }}</td>
+                <td>{{ reply.reply }}</td>
+                <td>{{ reply.date }}</td>
+                <td>{% if reply.mode %}Yes{% else %}No{% endif %}</td>
+                <td>{{ reply.author }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('reply_show', { 'id': reply.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('reply_edit', { 'id': reply.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('reply_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

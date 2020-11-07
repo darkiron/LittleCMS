@@ -13,3 +13,5 @@
 172.18.0.1 - - [25/Oct/2020:10:40:46 +0000] "GET / HTTP/1.1" 404 31995 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36"
 172.18.0.1 - - [25/Oct/2020:10:40:47 +0000] "GET /favicon.ico HTTP/1.1" 404 166531 "http://localhost/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36"
 172.18.0.1 - - [25/Oct/2020:11:04:05 +0000] "GET / HTTP/1.1" 404 32015 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36"
+172.18.0.1 - - [31/Oct/2020:21:18:27 +0000] "GET / HTTP/1.1" 404 32015 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36"
+172.18.0.1 - - [31/Oct/2020:21:18:28 +0000] "GET /favicon.ico HTTP/1.1" 404 166535 "http://localhost/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36"

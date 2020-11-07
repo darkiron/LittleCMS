@@ -28,3 +28,14 @@ services:
             - ./logs:/logs
         links:
             - php
+    node:
+        image: node:latest
+        user: "node"
+        working_dir: /home/node/app
+        environment:
+            - NODE_ENV=production
+        volumes:
+            - ./frontApp:/home/node/app
+        expose:
+            - "8081"
+        #command: "npm start"
